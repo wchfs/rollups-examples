@@ -49,7 +49,7 @@ services:
       - ./config:/opt/cartesi/share/config/
 
   server_manager:
-    image: cartesi/server-manager:0.1.2
+    image: cartesi/server-manager:0.1.0
     platform: linux/amd64
     restart: always
     volumes:
@@ -101,7 +101,6 @@ services:
       - POSTGRES_PASSWORD=password
     volumes:
       - database-data:/var/lib/postgresql/data
-
 
   provy_server:
     depends_on:

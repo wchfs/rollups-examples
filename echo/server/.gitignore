@@ -3,3 +3,6 @@ __pycache__
 *.ext2
 *.yaml
 machine
+**/.DS_Store
+database.db
+

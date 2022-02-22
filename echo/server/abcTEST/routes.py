@@ -1,77 +1,88 @@
+import json
+from os import environ
+
+import flask
+import requests
+from flask import request, jsonify
 
 from abcTEST import app, db
-from flask import redirect, request
-import requests
-from os import environ
-import json
-
 from abcTEST.models import Task, User
-from abcTEST.types import Action
+
 dispatcher_url = environ["HTTP_DISPATCHER_URL"]
+
 
 @app.route("/advance", methods=["POST"])
 def advance():
-    body = request.get_json()
-    partial = body["payload"][2:]
-    app.logger.info("Hex Without 0x : " + partial)
-    content = (bytes.fromhex(partial).decode("utf-8"))
-    s_json = json.loads(content)
-    path = s_json["path"]
-    method = s_json["method"]
-    app.logger.info(f"{content}")
-    app.logger.info(f"Dispatcher: {dispatcher_url}")
-    app.logger.info(f"Path: {path}")
-    # response = requests.post(dispatcher_url + "/notice", json={"payload": body["payload"]})
-    # response2 = requests.post("http://0.0.0.0:5003/" + path, json={"payload": body["payload"]})
-    users = User.query.all()
-    app.logger.info(f"GET na USERS {users}")
-    listToStr = ' '.join(map(str, users))
-    newpayload = "0x"+str(listToStr.encode("utf-8").hex())
-    body["payload"] = newpayload
-    app.logger.info(f"GET na USERS {newpayload}")
-    response = requests.post(dispatcher_url + "/notice", json={"payload": body["payload"]})
-    app.logger.info(f"Received notice status {response.status_code} body {response.content}")
-    response = requests.post(dispatcher_url + "/finish", json={"status": "accept"})
-    return "List of users", 202
+    s_json = hex2json(request.get_json()["payload"])  # make json object from 0x123456... received from request body
 
-@app.route('/users', methods=['GET', 'POST'])
-def users():
-    app.logger.info(f"Tu jestem {request}")
-    body = request.get_json()
-    app.logger.info(f"Tu body:::: {body}")
-    partial = body["payload"][2:]
-    content = (bytes.fromhex(partial).decode("utf-8"))
-    action = json.loads(content)
-    app.logger.info(f"Moje action {action}")
-    # action = False
-    if (action.get('method') == 'POST'):
-        name = action.get('payload').get('name');
-        email = action.get('payload').get('email');
-        user = User(name=name, email=email)
-        db.session.add(user)
-        db.session.commit()
-        response = requests.post(dispatcher_url + "/finish", json={"status": "accept"})
-        return "User was added", 202
-    else: 
-        users = User.query.all()
-        app.logger.info(f"GET na USERS {users}")
-        response = requests.post(dispatcher_url + "/finish", json={"status": "accept"})
-        return "List of users", 202
+    path = s_json["path"]  # recognize HTTP endpoint
+    method = s_json["method"]  # recognize HTTP method
+    payload = s_json["payload"]  # recognize HTTP payload
 
-@app.route('/tasks', methods=['GET', 'POST'])
-def tasks():
-    action: Action = request.get_json()
-    if (action.get('method') == 'POST'):
-        title = action.get('payload').get('title');
-        description = action.get('payload').get('description');
+    result = {}
 
-        task = Task(title=title, description=description)
-        db.session.add(task)
-        db.session.commit()
-        response = requests.post(dispatcher_url + "/finish", json={"status": "accept"})
-        return "Task was added", 202
-    else: 
-        tasks = Task.query.all()
-        app.logger.info(f"GET na TASKS {tasks}")
-        response = requests.post(dispatcher_url + "/finish", json={"status": "accept"})
-        return "List of tasks", 202
+    if method == 'GET' and path == '/users':
+        result = get_users(payload)
+
+    if method == 'POST' and path == '/users':
+        result = add_users(payload)
+
+    if method == 'GET' and path == '/tasks':
+        result = get_tasks(payload)
+
+    if method == 'POST' and path == '/tasks':
+        result = add_tasks(payload)
+
+    if result != {}:
+        response = requests.post(dispatcher_url + "/notice", json={"payload": json2hex(result)})
+        app.logger.info(f"Received notice status {response.status_code} body {response.content}")
+    else:
+        app.logger.info(f"Empty result, so skip notice")
+
+    requests.post(dispatcher_url + "/finish", json={"status": "accept"})
+
+    return "Advance OK", 202
+
+
+def hex2json(hex_json):
+    partial = hex_json[2:]  # partial as 123456...
+    content = (bytes.fromhex(partial).decode("utf-8"))  # decode partial from hex to string
+    return json.loads(content)  # convert decoded partial to json format
+
+
+def json2hex(json2encode):
+    return "0x" + str(flask.json.dumps(json2encode).encode("utf-8").hex())
+
+
+def get_users(payload):
+    return rows2dict(User.query.all())
+
+
+def add_users(users_payload):
+    user = User(name=users_payload['name'], email=users_payload['email'])
+    db.session.add(user)
+    db.session.commit()
+    return get_users(users_payload)
+
+
+def get_tasks(payload):
+    return rows2dict(Task.query.all())
+
+
+def add_tasks(tasks_payload):
+    task = Task(title=tasks_payload['title'], description=tasks_payload['description'])
+    db.session.add(task)
+    db.session.commit()
+    return get_tasks(tasks_payload)
+
+
+def rows2dict(rows):
+    d = []
+
+    for row in rows:
+        rd = {}
+        for column in row.__table__.columns:
+            rd[column.name] = str(getattr(row, column.name))
+        d.append(rd)
+
+    return d

@@ -30,6 +30,7 @@ $app->configure('app');
 
 $web3 = new Web3('http://hardhat:8545');
 
+
 $closure = function (Request $request) use ($web3): JsonResponse {
     $hexJsonData = bin2hex(
         json_encode([
