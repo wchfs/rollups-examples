@@ -20,7 +20,10 @@ HTTP_DISPATCHER_PORT=5004
 # Change dir to echo-dapp root
 cd /mnt/echo-dapp
 
-cp -n database_structure.db database.db
+pwd
+ls -al
+
+cp database_structure.db database.db
 
 # Start echo dapp
 echo -n "Starting echo-dapp: "
