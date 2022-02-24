@@ -20,11 +20,6 @@ HTTP_DISPATCHER_PORT=5004
 # Change dir to echo-dapp root
 cd /mnt/echo-dapp
 
-pwd
-ls -al
-
-cp database_structure.db database.db
-
 # Start echo dapp
 echo -n "Starting echo-dapp: "
 HTTP_DISPATCHER_URL="http://127.0.0.1:$HTTP_DISPATCHER_PORT" \
