@@ -1,9 +1,0 @@
-[2022-02-24 12:54:08] local.ERROR: Command "serve" is not defined. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\CommandNotFoundException(code: 0): Command \"serve\" is not defined. at /Users/karol/code_dapp/cartesi_example_apps/echo/server/phptodo/vendor/symfony/console/Application.php:709)
-[stacktrace]
-#0 /Users/karol/code_dapp/cartesi_example_apps/echo/server/phptodo/vendor/symfony/console/Application.php(259): Symfony\\Component\\Console\\Application->find('serve')
-#1 /Users/karol/code_dapp/cartesi_example_apps/echo/server/phptodo/vendor/symfony/console/Application.php(171): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
-#2 /Users/karol/code_dapp/cartesi_example_apps/echo/server/phptodo/vendor/illuminate/console/Application.php(94): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
-#3 /Users/karol/code_dapp/cartesi_example_apps/echo/server/phptodo/vendor/laravel/lumen-framework/src/Console/Kernel.php(116): Illuminate\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
-#4 /Users/karol/code_dapp/cartesi_example_apps/echo/server/phptodo/artisan(35): Laravel\\Lumen\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
-#5 {main}
-"} 

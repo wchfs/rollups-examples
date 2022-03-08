@@ -20,15 +20,10 @@ HTTP_DISPATCHER_PORT=5004
 # Change dir to echo-dapp root
 cd /mnt/echo-dapp
 
-pwd
-ls -al
-
-cp database_structure.db database.db
-
 # Start echo dapp
 echo -n "Starting echo-dapp: "
-HTTP_DISPATCHER_URL="http://127.0.0.1:$HTTP_DISPATCHER_PORT" \
-gunicorn --preload --workers 1 --bind 127.0.0.1:$DAPP_PORT echo:app &
+#HTTP_DISPATCHER_URL="http://127.0.0.1:$HTTP_DISPATCHER_PORT" \
+php -S 127.0.0.1:$DAPP_PORT -t php &
 
 # Wait for the echo dapp to start up
 RETRY=0
@@ -37,7 +32,7 @@ do
     echo -n "."
     sleep 1
     RETRY=$(echo $RETRY + 1 | bc)
-    if [ "$RETRY" == "100" ]
+    if [ "$RETRY" == "20" ]
     then
         echo "echo dapp timed out"
         return 1

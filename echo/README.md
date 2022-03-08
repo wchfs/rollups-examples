@@ -94,26 +94,16 @@ docker-compose -f docker-compose-host.yml up --build
 
 #### Requirements
 
-- Running docker containers
-- `php v8.1.*`
 - Hardhat docker image should be named `echo-hardhat-1`
-
-```shell
-cd proxy && ./run.sh
-```
 
 ---
 
-The next step is to run the echo server in your machine. The application is written in Python, so you need to have `python3` installed.
+The next step is to run the echo server in your machine. The application is written in Python, so you need to have `php 7.4` installed.
 
 In order to start the echo server, run the following commands in a dedicated terminal:
 
 ```shell
-cd echo/server/
-python3 -m venv .env
-. .env/bin/activate
-pip install -r requirements.txt
-HTTP_DISPATCHER_URL="http://127.0.0.1:5004" gunicorn --reload --workers 1 --bind 0.0.0.0:5003 echo:app
+cd echo/server/ && php -S 0.0.0.0:5003 -t php
 ```
 
 This will run the echo server on port `5003` and send the corresponding notices to port `5004`. The server will also automatically reload if there is a change in the source code, enabling fast development iterations.
@@ -123,11 +113,7 @@ The final command, which effectively starts the server, can also be configured i
 After the server successfully starts, it should print an output like the following:
 
 ```
-[2022-01-21 12:38:23,971] INFO in echo: HTTP dispatcher url is http://127.0.0.1:5004
-[2022-01-21 12:38:23 -0500] [79032] [INFO] Starting gunicorn 19.9.0
-[2022-01-21 12:38:23 -0500] [79032] [INFO] Listening at: http://0.0.0.0:5003 (79032)
-[2022-01-21 12:38:23 -0500] [79032] [INFO] Using worker: sync
-[2022-01-21 12:38:23 -0500] [79035] [INFO] Booting worker with pid: 79035
+[Tue Mar  8 12:08:55 2022] PHP 7.4.27 Development Server (http://0.0.0.0:5003) started
 ```
 
 After that, you can interact with the application normally [as explained above](#interacting-with-the-application).
