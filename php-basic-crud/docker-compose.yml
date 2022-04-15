@@ -2,6 +2,7 @@ version: '3'
 
 services:
   hardhat:
+    container_name: php-basic-crud-hardhat
     build: ./contracts
     command: ["node", "--write", "true", "--network", "hardhat", "--export", "/opt/cartesi/share/blockchain/localhost.json"]
     init: true

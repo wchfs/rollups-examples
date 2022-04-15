@@ -11,12 +11,14 @@
 # CONDITIONS OF ANY KIND, either express or implied. See the License for the
 # specific language governing permissions and limitations under the License.
 
-DAPP_FS=/opt/cartesi/echo-dapp-fs/echo-dapp
-DAPP_FS_BIN=/opt/cartesi/echo-dapp-fs/echo-dapp.ext2
+MACHINE_DIR=/opt/cartesi/php-basic-crud-machine
 
-mkdir -p $DAPP_FS
-cp ./echo.py $DAPP_FS
-cp ./run.sh $DAPP_FS
-cp ./database_structure.db $DAPP_FS/database.db
-genext2fs -f -i 512 -b 1024 -d $DAPP_FS $DAPP_FS_BIN
-truncate -s %4096 $DAPP_FS_BIN
+cartesi-machine \
+    --ram-length=128Mi \
+    --rollup \
+    --flash-drive=label:php-basic-crud-dapp,filename:php-basic-crud-dapp.ext2 \
+    --flash-drive=label:root,filename:rootfs.ext2 \
+    --ram-image=linux-5.5.19-ctsi-3.bin \
+    --rom-image=rom.bin \
+    --store=$MACHINE_DIR \
+    -- "/mnt/php-basic-crud-dapp/run.sh"
