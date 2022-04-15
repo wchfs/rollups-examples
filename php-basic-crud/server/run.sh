@@ -22,7 +22,6 @@ cd /mnt/php-basic-crud-dapp
 
 # Start php-basic-crud dapp
 echo -n "Starting php-basic-crud-dapp: "
-#HTTP_DISPATCHER_URL="http://127.0.0.1:$HTTP_DISPATCHER_PORT" \
 php -S 127.0.0.1:$DAPP_PORT -t php &
 
 # Wait for the php-basic-crud dapp to start up
