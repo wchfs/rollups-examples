@@ -11,21 +11,21 @@
 # CONDITIONS OF ANY KIND, either express or implied. See the License for the
 # specific language governing permissions and limitations under the License.
 
-# Start the Cartesi HTTP-Dispatcher and the echo-dapp.
+# Start the Cartesi HTTP-Dispatcher and the php-basic-crud-dapp.
 # This script must run inside the cartesi machine
 
 DAPP_PORT=5003
 HTTP_DISPATCHER_PORT=5004
 
-# Change dir to echo-dapp root
-cd /mnt/echo-dapp
+# Change dir to php-basic-crud-dapp root
+cd /mnt/php-basic-crud-dapp
 
-# Start echo dapp
-echo -n "Starting echo-dapp: "
+# Start php-basic-crud dapp
+echo -n "Starting php-basic-crud-dapp: "
 #HTTP_DISPATCHER_URL="http://127.0.0.1:$HTTP_DISPATCHER_PORT" \
 php -S 127.0.0.1:$DAPP_PORT -t php &
 
-# Wait for the echo dapp to start up
+# Wait for the php-basic-crud dapp to start up
 RETRY=0
 while ! netstat -ntl 2&>1 | grep $DAPP_PORT > /dev/null
 do
@@ -34,7 +34,7 @@ do
     RETRY=$(echo $RETRY + 1 | bc)
     if [ "$RETRY" == "20" ]
     then
-        echo "echo dapp timed out"
+        echo "php-basic-crud dapp timed out"
         return 1
     fi
 done

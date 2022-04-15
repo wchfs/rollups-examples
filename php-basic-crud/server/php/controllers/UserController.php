@@ -13,6 +13,10 @@ class UserController
 
     public function get(string $path, ?array $payload): ?array
     {
+        /**
+         * TODO
+         */
+
         return null;
     }
 
@@ -36,16 +40,28 @@ class UserController
 
     public function put(string $path, ?array $payload): ?array
     {
+        /**
+         * TODO
+         */
+
         return null;
     }
 
     public function patch(string $path, ?array $payload): ?array
     {
+        /**
+         * TODO
+         */
+
         return null;
     }
 
     public function delete(string $path, ?array $payload): ?array
     {
+        /**
+         * TODO
+         */
+
         return null;
     }
 }

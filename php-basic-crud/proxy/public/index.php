@@ -38,7 +38,7 @@ $closure = function (Request $request) use ($web3): JsonResponse {
         ], JSON_THROW_ON_ERROR)
     );
 
-    $command = 'docker exec php-basic-crud-hardhat npx hardhat --network localhost echo:addInput --input "0x' . $hexJsonData . '"';
+    $command = 'docker exec php-basic-crud-hardhat npx hardhat --network localhost php-basic-crud:addInput --input "0x' . $hexJsonData . '"';
 
     $commandOutput = explode(' ', Str::after(shell_exec($command), 'to epoch '));
 

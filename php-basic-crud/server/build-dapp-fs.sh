@@ -11,8 +11,8 @@
 # CONDITIONS OF ANY KIND, either express or implied. See the License for the
 # specific language governing permissions and limitations under the License.
 
-DAPP_FS=/opt/cartesi/echo-dapp-fs/echo-dapp
-DAPP_FS_BIN=/opt/cartesi/echo-dapp-fs/echo-dapp.ext2
+DAPP_FS=/opt/cartesi/php-basic-crud-dapp-fs/php-basic-crud-dapp
+DAPP_FS_BIN=/opt/cartesi/php-basic-crud-dapp-fs/php-basic-crud-dapp.ext2
 
 mkdir -p $DAPP_FS
 cp -R ./php $DAPP_FS

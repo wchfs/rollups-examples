@@ -13,19 +13,19 @@
 DAPP_SERVER_MANAGER_TAG := 0.1.0
 DAPP_SERVER_MANAGER_IMG := cartesi/server-manager:$(DAPP_SERVER_MANAGER_TAG)
 
-CONTAINER_NAME := cartesi-echo-dapp
-CONTAINER_BASE := /opt/cartesi/echo
-CONTAINER_DAPP_FS_BIN := /opt/cartesi/echo-dapp-fs/echo-dapp.ext2
-CONTAINER_MACHINE_DIR := /opt/cartesi/echo-machine
+CONTAINER_NAME := cartesi-php-basic-crud-dapp
+CONTAINER_BASE := /opt/cartesi/php-basic-crud
+CONTAINER_DAPP_FS_BIN := /opt/cartesi/php-basic-crud-dapp-fs/php-basic-crud-dapp.ext2
+CONTAINER_MACHINE_DIR := /opt/cartesi/php-basic-crud-machine
 
-DAPP_FS_BIN := echo-dapp.ext2
+DAPP_FS_BIN := php-basic-crud-dapp.ext2
 BINARIES := rootfs.ext2 linux-5.5.19-ctsi-3.bin rom.bin
 MACHINE_DIR := machine
 
 .PHONY: console clean
 
 $(MACHINE_DIR): $(DAPP_FS_BIN) $(BINARIES)
-	@echo "Building cartesi-machine echo-dapp instance..."
+	@echo "Building cartesi-machine php-basic-crud-dapp instance..."
 	@if docker inspect $(CONTAINER_NAME) > /dev/null 2>&1; then \
 		docker rm -f $(CONTAINER_NAME) > /dev/null; \
 	fi
@@ -54,7 +54,7 @@ $(BINARIES) &:
 	@shasum -c shasumfile
 
 $(DAPP_FS_BIN): run.sh
-	@echo "Building echo-dapp filesystem..."
+	@echo "Building php-basic-crud-dapp filesystem..."
 	@if docker inspect $(CONTAINER_NAME) > /dev/null 2>&1; then \
 		docker rm -f $(CONTAINER_NAME) > /dev/null; \
 	fi
