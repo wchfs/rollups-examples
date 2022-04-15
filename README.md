@@ -2,7 +2,12 @@
 
 This repository includes examples of decentralized applications implemented using [Cartesi Rollups](https://github.com/cartesi/rollups).
 
+You can use [Gitpod](https://www.gitpod.io/) to immediately open this repository within a working development environment with all [required dependencies](https://cartesi.io/docs/build-dapps/requirements) already installed.
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#prebuild/https://github.com/cartesi/rollups-examples/)
+
 ## Introduction
+
 From a developer’s point of view, each decentralized application or _DApp_ is composed of two main parts: a **front-end** and a **back-end**.
 
 The **front-end** corresponds to the user-facing interface, which for these examples will often correspond to a command-line interface in the form of Hardhat tasks.
@@ -14,6 +19,7 @@ When compared to traditional software development, the main difference of a Cart
 ## HTTP API
 
 As discussed above, the front-end and back-end parts of a Cartesi DApp communicate with each other through the Rollups framework. This is accomplished in practice by using an HTTP API.
+
 ### Back-end
 
 The DApp's back-end needs to implement a couple of endpoints to receive requests from the Cartesi Rollups framework. These are specified by Cartesi's [HTTP DApp API](https://github.com/cartesi/openapi-interfaces/blob/master/dapp.yaml).
@@ -42,8 +48,26 @@ _Note_: when running in host mode, localhost ports `5003` and `5004` will be use
 
 ## Examples
 
-### 1. [Simple Echo DApp](./echo)
+### 1. [Echo DApp](./echo)
 
-A basic "hello world" application, this DApp's back-end simply copies each input received as a corresponding output notice.
+A basic "hello world" application, this DApp's back-end is written in Python and simply copies each input received as a corresponding output notice.
 
+### 2. [Echo C++ DApp](./echo-cpp)
 
+Implements the same behavior as the [Echo DApp](#1-echo-dapp) above, but with a back-end written in C++.
+
+### 3. [Converter DApp](./converter)
+
+An extension of the Echo DApp that handles complex input in the form of JSON strings, in order to perform transformations on text messages.
+
+### 4. [SQLite DApp](./sqlite)
+
+Demonstrates how a DApp can easily leverage standard mainstream capabilities by building a minimalistic "decentralized SQL database" just by using the Cartesi Machine's built-in support for [SQLite](https://www.sqlite.org/index.html). This application will receive arbitrary SQL commands as input and execute them in an internal database, allowing users to insert data and query them later on. This example also highlights how errors should be handled, in the case of invalid SQL statements.
+
+### 5. [k-NN DApp](./knn)
+
+A Machine Learning Python application that implements the k-Nearest Neighbors supervised classification algorithm, and applies it to the classic Iris flower dataset.
+
+### 6. [m2cgen DApp](./m2cgen)
+
+A more generic Machine Learning DApp that illustrates how to use the [m2cgen (Model to Code Generator)](https://github.com/BayesWitnesses/m2cgen) library to easily leverage widely used Python ML tools such as [scikit-learn](https://scikit-learn.org/), [NumPy](https://numpy.org/) and [pandas](https://pandas.pydata.org/). 

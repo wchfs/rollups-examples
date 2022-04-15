@@ -65,7 +65,7 @@ Go to https://www.online-toolz.com/tools/decode-hex.php and paste there followin
 }
 ```
 
-Copy hex output and replace phrase `<hex>` in below command.  
+Copy hex output and replace phrase `<hex>` in below command.
 
 ```shell
 $ docker exec php-basic-crud-hardhat npx hardhat --network localhost php-basic-crud:addInput --input "0x<hex>"
